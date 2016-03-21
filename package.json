@@ -1,0 +1,24 @@
+{
+  "name": "functional-frontend-workshop",
+  "version": "0.1.0",
+  "description": "Presentation for the \"Functional Frontend\" workshop",
+  "main": "index.html",
+  "scripts": {
+    "build": "cleaver index.md",
+    "start": "cleaver watch index.md --style style.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firstdoit/functional-frontend-workshop.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firstdoit/functional-frontend-workshop/issues"
+  },
+  "homepage": "https://github.com/firstdoit/functional-frontend-workshop#readme",
+  "dependencies": {
+    "cleaver": "^0.8.1"
+  }
+}
