@@ -947,6 +947,7 @@ pre .hljs-xml .hljs-cdata {
 }
 
   </style>
+    <script async src="http://localhost:35729/livereload.js"></script>
 </head>
 <body>
     <div class="progress">
@@ -961,30 +962,50 @@ pre .hljs-xml .hljs-cdata {
   <div class="slide hidden" id="slide-2">
     <section class="slide-content"><h3 id="contents">Contents</h3>
 <ul>
+<li>&quot;Simplicity&quot;</li>
 <li>Pure functions</li>
 <li><code>map</code> and <code>reduce</code></li>
 <li><code>const</code> vs <code>let</code></li>
-<li>&quot;Simplicity&quot;</li>
 <li>Function composition</li>
+<li>Immutability</li>
 </ul>
 </section>
   </div>
   <div class="slide hidden" id="slide-3">
+    <section class="slide-content"><blockquote>
+<p>“The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.”<br>~ Joe Armstrong</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-4">
+    <section class="slide-content"><h3 id="simple">Simple</h3>
+<p><code>sim-plex</code> - &quot;One fold/braid&quot;  </p>
+<blockquote>
+<p>The opposite of this word is complex, which means braided together or folded together.<br>What matters for simplicity is that there is no interleaving.</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-5">
+    <section class="slide-content"><h2 id="the-functional-programming-ideal">The Functional Programming ideal</h2>
+<p>You can&#39;t get <em>simpler</em> than <strong>Data and Functions</strong></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-6">
     <section class="slide-content"><h3 id="pure-functions">Pure functions</h3>
-<p>Pure functions are functions <strong>without side effects</strong> and <strong>without external dependencies</strong>.</p>
+<p>Pure functions are <strong>idempotent</strong> functions <strong>without side effects</strong> and <strong>without external dependencies</strong>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> pure = (a) =&gt; a + <span class="hljs-number">1</span>
 <span class="hljs-keyword">const</span> foo = <span class="hljs-number">1</span>
 <span class="hljs-keyword">const</span> bar = pure(foo)
 <span class="hljs-built_in">console</span>.log(foo, bar) <span class="hljs-comment">// 1, 2</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-4">
+  <div class="slide hidden" id="slide-7">
     <section class="slide-content"><blockquote>
 <p>Pure functions depend only on the inputs of the function, and the output should be the exact same for the same input.</p>
 </blockquote>
 </section>
   </div>
-  <div class="slide hidden" id="slide-5">
+  <div class="slide hidden" id="slide-8">
     <section class="slide-content"><h3 id="impure-by-side-effect">Impure by side effect</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">let</span> foo = <span class="hljs-number">1</span>
 <span class="hljs-keyword">let</span> sideEffect = () =&gt; foo = <span class="hljs-number">2</span>
@@ -992,7 +1013,7 @@ sideEffect()
 <span class="hljs-built_in">console</span>.log(foo) <span class="hljs-comment">// 2</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-6">
+  <div class="slide hidden" id="slide-9">
     <section class="slide-content"><h3 id="impure-by-external-dependency">Impure by external dependency</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">let</span> foo = <span class="hljs-number">1</span>
 <span class="hljs-keyword">let</span> externalDep = (a) =&gt; foo + a
@@ -1004,26 +1025,107 @@ qux = externalDep(<span class="hljs-number">2</span>)
 <span class="hljs-built_in">console</span>.log(qux) <span class="hljs-comment">// 5</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-7">
+  <div class="slide hidden" id="slide-10">
     <section class="slide-content"><blockquote>
 <p>Pure functions bound the cognitive load of programming. When you’re writing a pure function, you only need to concern yourself with the body of the function. You don’t need to worry about externalities that could cause problems</p>
 </blockquote>
 </section>
   </div>
-  <div class="slide hidden" id="slide-8">
+  <div class="slide hidden" id="slide-11">
     <section class="slide-content"><h3 id="functional-building-blocks">Functional building blocks</h3>
+<ul>
+<li><code>map: (list) -&gt; list</code></li>
+<li><code>reduce: (list) -&gt; value</code></li>
+</ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-9">
+  <div class="slide hidden" id="slide-12">
+    <section class="slide-content"><h3 id="array-prototype-map-">Array.prototype.map()</h3>
+<blockquote>
+<p>The map() method creates a new array with the results of calling a provided function on every element in this array.</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><pre><code class="lang-js">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>].map(
+  (value, currentIndex, array) =&gt; {
+    <span class="hljs-keyword">return</span> value + <span class="hljs-number">1</span>
+  }
+) <span class="hljs-comment">// [1, 2, 3, 4, 5]</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-14">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">const</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">9</span>]
+<span class="hljs-keyword">const</span> roots = numbers.map(<span class="hljs-built_in">Math</span>.sqrt)
+<span class="hljs-comment">// roots is now [1, 2, 3], numbers is still [1, 4, 9]</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-15">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">const</span> map = <span class="hljs-built_in">Array</span>.prototype.map
+<span class="hljs-keyword">const</span> a = map.call(<span class="hljs-string">'Hello World'</span>, (x) =&gt; x.charCodeAt(<span class="hljs-number">0</span>))
+<span class="hljs-comment">// a now equals [72, 101, 108, 108, 111, ...]</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-16">
+    <section class="slide-content"><h3 id="array-prototype-reduce-">Array.prototype.reduce()</h3>
+<blockquote>
+<p>The reduce() method applies a function against an accumulator and each value of the array (from left-to-right) to reduce it to a single value.</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><pre><code class="lang-js">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>].reduce(
+  (previousValue, currentValue, currentIndex, array) =&gt; {
+    <span class="hljs-keyword">return</span> previousValue + currentValue
+  }
+) <span class="hljs-comment">// 10</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
+    <section class="slide-content"><pre><code class="lang-js">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>].reduce( (prev, curr) =&gt; prev + curr ) <span class="hljs-comment">// 10</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-19">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">const</span> sum = (prev, curr) =&gt; prev + curr
+[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>].reduce(sum, <span class="hljs-number">10</span>) <span class="hljs-comment">// 20</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-20">
+    <section class="slide-content"><h3 id="functional-utils">Functional utils</h3>
+<ul>
+<li><code>reverse() ([1, 2, 3]) -&gt; [3, 2, 1]</code></li>
+<li><code>find() ([x]) -&gt; x</code></li>
+<li><code>filter() ([x]) -&gt; [y]</code></li>
+<li><code>any() — true if any values match predicate</code></li>
+<li><code>all() — true if all values match predicate</code></li>
+<li><code>sum() — total of all values</code></li>
+<li><code>product() — product of all values</code></li>
+<li><code>maximum() — highest value</code></li>
+<li><code>minimum() — lowest value</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-21">
+    <section class="slide-content"><p>They can all be written in terms of <code>map</code> and <code>reduce</code></p>
+<pre><code class="lang-js">r = (v, i, array) =&gt; array[array.length - <span class="hljs-number">1</span> - i]
+reverse = (a) =&gt; <span class="hljs-built_in">Array</span>.prototype.map.call(a, r)
+reverse([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]) <span class="hljs-comment">// [3, 2, 1]</span>
+reverse(<span class="hljs-string">'oba'</span>) <span class="hljs-comment">// ["a", "b", "o"]</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-22">
     <section class="slide-content"><h1 id="thanks-">Thanks!</h1>
 <h2 id="-">💥💥💥</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-10">
-    <section class="slide-content"><p><a href="https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt">https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt</a></p>
+  <div class="slide hidden" id="slide-23">
+    <section class="slide-content"><p><a href="http://www.infoq.com/presentations/Simple-Made-Easy">http://www.infoq.com/presentations/Simple-Made-Easy</a>
+<a href="https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt">https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt</a>
+<a href="https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a">https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a</a>
+<a href="https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter">https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter</a></p>
 </section>
   </div>
-  <div class="slide hidden author-slide" id="slide-11">
+  <div class="slide hidden author-slide" id="slide-24">
     <section class="slide-content"><div class="author">
   <h1 class="name">Guilherme Rodrigues</h1>
     <h3 class="twitter">
