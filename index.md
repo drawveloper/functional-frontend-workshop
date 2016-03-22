@@ -19,13 +19,7 @@ author:
 - Pure functions
 - `map` and `reduce`
 - `const` vs `let`
-- Function composition
 - Immutability
-
---
-
-> “The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.”  
-~ Joe Armstrong
 
 --
 
@@ -35,6 +29,11 @@ author:
 
 > The opposite of this word is complex, which means braided together or folded together.  
 > What matters for simplicity is that there is no interleaving.
+
+--
+
+> “The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.”  
+~ Joe Armstrong
 
 --
 
@@ -87,7 +86,7 @@ console.log(qux) // 5
 
 --
 
-> Pure functions bound the cognitive load of programming. When you’re writing a pure function, you only need to concern yourself with the body of the function. You don’t need to worry about externalities that could cause problems
+> Pure functions bound the cognitive load of programming. When you’re writing a pure function, you only need to concern yourself with the body of the function. You don’t need to worry about externalities that could cause problems.
 
 --
 
@@ -185,6 +184,126 @@ reverse('oba') // ["a", "b", "o"]
 
 --
 
+### `const` vs `let`
+
+TL;DR: Always use `const`
+
+> The const declaration creates a read-only reference to a value.
+
+- `const`: "Great, this will stay the same"*
+- `let`: "Uh-oh, need to keep this in mind"
+
+\* doesn't mean immutable. Which brings us to our next topic...
+
+--
+
+We already know side effects are not cool.  
+How we discourage something not cool?  
+We forbid it. 😂
+
+> Much of what makes application development difficult is tracking mutation and maintaining state. Developing with immutable data encourages you to think differently about how data flows through your application.
+
+--
+
+### Immutability
+
+> Immutable data cannot be changed once created, leading to much simpler application development, no defensive copying, and enabling advanced memoization and change detection techniques with simple logic.
+
+--
+
+### Memowat?
+
+> In computing, memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again.
+
+(`shouldComponentUpdate?`)
+
+--
+
+```js
+var map1 = Immutable.Map({a:1, b:2, c:3});
+var map2 = map1.set('b', 2);
+assert(map1.equals(map2) === true);
+var map3 = map1.set('b', 50);
+assert(map1.equals(map3) === false);
+```
+
+--
+
+> The difference for the immutable collections is that methods which would mutate the collection, like push, set, unshift or splice instead return a new immutable collection. Methods which return new arrays like slice or concat instead return new immutable collections.
+
+--
+
+```js
+var list1 = Immutable.List.of(1, 2);
+var list2 = list1.push(3, 4, 5);
+var list3 = list2.unshift(0);
+var list4 = list1.concat(list2, list3);
+assert(list1.size === 2);
+assert(list2.size === 5);
+assert(list3.size === 6);
+assert(list4.size === 13);
+assert(list4.get(0) === 1);
+```
+
+--
+
+There and back again
+
+```js
+var deep = Immutable.Map({
+  a: 1, b: 2, c: Immutable.List.of(3, 4, 5)
+});
+deep.toObject() // { a: 1, b: 2, c: List [ 3, 4, 5 ] }
+deep.toArray() // [ 1, 2, List [ 3, 4, 5 ] ]
+deep.toJS() // { a: 1, b: 2, c: [ 3, 4, 5 ] }
+JSON.stringify(deep) // '{"a":1,"b":2,"c":[3,4,5]}'
+```
+
+--
+
+Why is any of this useful?
+
+Procedural thinking encourages you to **create state** and **mutate** it.
+
+Functional tools makes you think about **data** and **operations** on it.
+
+--
+
+```js
+let words = content.split(/[\s.,\/:\n]+/);
+let tally = {};
+for (let i = 0; i < words.length; i++) {
+  let word = words[i].toLowerCase();
+  tally[word] = (tally[word] || 0) + 1;
+}
+```
+
+--
+
+```js
+const words = content.split(/[\s.,\/:\n]+/);
+const tally = words
+  .map(function(str) {
+    return str.toLowerCase()
+  })
+  .reduce(function(tally, word) {
+    tally[word] = (tally[word] || 0) + 1;
+    return tally;
+  }, {})
+
+```
+
+--
+
+For next time:
+
+- `apply`, `call`, `bind`
+- Composition
+- Currying
+- Ramda?
+
+--
+
 # Thanks!
 
 ## 💥💥💥
@@ -195,3 +314,6 @@ http://www.infoq.com/presentations/Simple-Made-Easy
 https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt
 https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a
 https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter
+http://tobyho.com/2015/11/09/functional-programming-by-example/
+http://fr.umio.us/why-ramda/
+http://ramdajs.com

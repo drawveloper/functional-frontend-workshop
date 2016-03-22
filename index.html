@@ -947,7 +947,6 @@ pre .hljs-xml .hljs-cdata {
 }
 
   </style>
-    <script async src="http://localhost:35729/livereload.js"></script>
 </head>
 <body>
     <div class="progress">
@@ -966,22 +965,21 @@ pre .hljs-xml .hljs-cdata {
 <li>Pure functions</li>
 <li><code>map</code> and <code>reduce</code></li>
 <li><code>const</code> vs <code>let</code></li>
-<li>Function composition</li>
 <li>Immutability</li>
 </ul>
 </section>
   </div>
   <div class="slide hidden" id="slide-3">
-    <section class="slide-content"><blockquote>
-<p>“The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.”<br>~ Joe Armstrong</p>
-</blockquote>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-4">
     <section class="slide-content"><h3 id="simple">Simple</h3>
 <p><code>sim-plex</code> - &quot;One fold/braid&quot;  </p>
 <blockquote>
 <p>The opposite of this word is complex, which means braided together or folded together.<br>What matters for simplicity is that there is no interleaving.</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-4">
+    <section class="slide-content"><blockquote>
+<p>“The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.”<br>~ Joe Armstrong</p>
 </blockquote>
 </section>
   </div>
@@ -1027,7 +1025,7 @@ qux = externalDep(<span class="hljs-number">2</span>)
   </div>
   <div class="slide hidden" id="slide-10">
     <section class="slide-content"><blockquote>
-<p>Pure functions bound the cognitive load of programming. When you’re writing a pure function, you only need to concern yourself with the body of the function. You don’t need to worry about externalities that could cause problems</p>
+<p>Pure functions bound the cognitive load of programming. When you’re writing a pure function, you only need to concern yourself with the body of the function. You don’t need to worry about externalities that could cause problems.</p>
 </blockquote>
 </section>
   </div>
@@ -1114,18 +1112,130 @@ reverse(<span class="hljs-string">'oba'</span>) <span class="hljs-comment">// ["
 </section>
   </div>
   <div class="slide hidden" id="slide-22">
+    <section class="slide-content"><h3 id="-const-vs-let-"><code>const</code> vs <code>let</code></h3>
+<p>TL;DR: Always use <code>const</code></p>
+<blockquote>
+<p>The const declaration creates a read-only reference to a value.</p>
+</blockquote>
+<ul>
+<li><code>const</code>: &quot;Great, this will stay the same&quot;*</li>
+<li><code>let</code>: &quot;Uh-oh, need to keep this in mind&quot;</li>
+</ul>
+<p>* doesn&#39;t mean immutable. Which brings us to our next topic...</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-23">
+    <section class="slide-content"><p>We already know side effects are not cool.<br>How we discourage something not cool?<br>We forbid it. 😂</p>
+<blockquote>
+<p>Much of what makes application development difficult is tracking mutation and maintaining state. Developing with immutable data encourages you to think differently about how data flows through your application.</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-24">
+    <section class="slide-content"><h3 id="immutability">Immutability</h3>
+<blockquote>
+<p>Immutable data cannot be changed once created, leading to much simpler application development, no defensive copying, and enabling advanced memoization and change detection techniques with simple logic.</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-25">
+    <section class="slide-content"><h3 id="memowat-">Memowat?</h3>
+<blockquote>
+<p>In computing, memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again.</p>
+</blockquote>
+<p>(<code>shouldComponentUpdate?</code>)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-26">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">var</span> map1 = Immutable.Map({a:<span class="hljs-number">1</span>, b:<span class="hljs-number">2</span>, c:<span class="hljs-number">3</span>});
+<span class="hljs-keyword">var</span> map2 = map1.set(<span class="hljs-string">'b'</span>, <span class="hljs-number">2</span>);
+assert(map1.equals(map2) === <span class="hljs-literal">true</span>);
+<span class="hljs-keyword">var</span> map3 = map1.set(<span class="hljs-string">'b'</span>, <span class="hljs-number">50</span>);
+assert(map1.equals(map3) === <span class="hljs-literal">false</span>);</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-27">
+    <section class="slide-content"><blockquote>
+<p>The difference for the immutable collections is that methods which would mutate the collection, like push, set, unshift or splice instead return a new immutable collection. Methods which return new arrays like slice or concat instead return new immutable collections.</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-28">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">var</span> list1 = Immutable.List.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-keyword">var</span> list2 = list1.push(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>);
+<span class="hljs-keyword">var</span> list3 = list2.unshift(<span class="hljs-number">0</span>);
+<span class="hljs-keyword">var</span> list4 = list1.concat(list2, list3);
+assert(list1.size === <span class="hljs-number">2</span>);
+assert(list2.size === <span class="hljs-number">5</span>);
+assert(list3.size === <span class="hljs-number">6</span>);
+assert(list4.size === <span class="hljs-number">13</span>);
+assert(list4.get(<span class="hljs-number">0</span>) === <span class="hljs-number">1</span>);</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-29">
+    <section class="slide-content"><p>There and back again</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> deep = Immutable.Map({
+  a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span>, c: Immutable.List.of(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)
+});
+deep.toObject() <span class="hljs-comment">// { a: 1, b: 2, c: List [ 3, 4, 5 ] }</span>
+deep.toArray() <span class="hljs-comment">// [ 1, 2, List [ 3, 4, 5 ] ]</span>
+deep.toJS() <span class="hljs-comment">// { a: 1, b: 2, c: [ 3, 4, 5 ] }</span>
+<span class="hljs-built_in">JSON</span>.stringify(deep) <span class="hljs-comment">// '{"a":1,"b":2,"c":[3,4,5]}'</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-30">
+    <section class="slide-content"><p>Why is any of this useful?</p>
+<p>Procedural thinking encourages you to <strong>create state</strong> and <strong>mutate</strong> it.</p>
+<p>Functional tools makes you think about <strong>data</strong> and <strong>operations</strong> on it.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-31">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">let</span> words = content.split(<span class="hljs-regexp">/[\s.,\/:\n]+/</span>);
+<span class="hljs-keyword">let</span> tally = {};
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; words.length; i++) {
+  <span class="hljs-keyword">let</span> word = words[i].toLowerCase();
+  tally[word] = (tally[word] || <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>;
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-32">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">const</span> words = content.split(<span class="hljs-regexp">/[\s.,\/:\n]+/</span>);
+<span class="hljs-keyword">const</span> tally = words
+  .map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>) </span>{
+    <span class="hljs-keyword">return</span> str.toLowerCase()
+  })
+  .reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tally, word</span>) </span>{
+    tally[word] = (tally[word] || <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> tally;
+  }, {})</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-33">
+    <section class="slide-content"><p>For next time:</p>
+<ul>
+<li><code>apply</code>, <code>call</code>, <code>bind</code></li>
+<li>Composition</li>
+<li>Currying</li>
+<li>Ramda?</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-34">
     <section class="slide-content"><h1 id="thanks-">Thanks!</h1>
 <h2 id="-">💥💥💥</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-23">
+  <div class="slide hidden" id="slide-35">
     <section class="slide-content"><p><a href="http://www.infoq.com/presentations/Simple-Made-Easy">http://www.infoq.com/presentations/Simple-Made-Easy</a>
 <a href="https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt">https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt</a>
 <a href="https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a">https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a</a>
-<a href="https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter">https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter</a></p>
+<a href="https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter">https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter</a>
+<a href="http://tobyho.com/2015/11/09/functional-programming-by-example/">http://tobyho.com/2015/11/09/functional-programming-by-example/</a>
+<a href="http://fr.umio.us/why-ramda/">http://fr.umio.us/why-ramda/</a>
+<a href="http://ramdajs.com">http://ramdajs.com</a></p>
 </section>
   </div>
-  <div class="slide hidden author-slide" id="slide-24">
+  <div class="slide hidden author-slide" id="slide-36">
     <section class="slide-content"><div class="author">
   <h1 class="name">Guilherme Rodrigues</h1>
     <h3 class="twitter">
