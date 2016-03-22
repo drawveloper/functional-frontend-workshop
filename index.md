@@ -261,7 +261,7 @@ JSON.stringify(deep) // '{"a":1,"b":2,"c":[3,4,5]}'
 
 --
 
-Why is any of this useful?
+### Why is any of this useful?
 
 Procedural thinking encourages you to **create state** and **mutate** it.
 
@@ -290,8 +290,34 @@ const tally = words
     tally[word] = (tally[word] || 0) + 1;
     return tally;
   }, {})
-
 ```
+
+--
+
+```js
+// operations
+const lower = (str) => str.toLowerCase()
+const tallyUp = (tally, word) => {
+  tally[word] = (tally[word] || 0) + 1;
+  return tally;
+}
+// data
+const words = content.split(/[\s.,\/:\n]+/);
+const tally = words
+  .map(lower)
+  .reduce(tallyUp, {})
+```
+
+--
+
+### FP untangles operations from data
+
+Operations become:
+
+- Simpler
+- Reusable
+- Easier to change
+- Easier to understand
 
 --
 
@@ -310,10 +336,10 @@ For next time:
 
 --
 
-http://www.infoq.com/presentations/Simple-Made-Easy
-https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt
-https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a
-https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter
-http://tobyho.com/2015/11/09/functional-programming-by-example/
-http://fr.umio.us/why-ramda/
-http://ramdajs.com
+http://www.infoq.com/presentations/Simple-Made-Easy  
+https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt  
+https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a  
+https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter  
+http://tobyho.com/2015/11/09/functional-programming-by-example/  
+http://fr.umio.us/why-ramda/  
+http://ramdajs.com  

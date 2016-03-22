@@ -1184,7 +1184,7 @@ deep.toJS() <span class="hljs-comment">// { a: 1, b: 2, c: [ 3, 4, 5 ] }</span>
 </section>
   </div>
   <div class="slide hidden" id="slide-30">
-    <section class="slide-content"><p>Why is any of this useful?</p>
+    <section class="slide-content"><h3 id="why-is-any-of-this-useful-">Why is any of this useful?</h3>
 <p>Procedural thinking encourages you to <strong>create state</strong> and <strong>mutate</strong> it.</p>
 <p>Functional tools makes you think about <strong>data</strong> and <strong>operations</strong> on it.</p>
 </section>
@@ -1211,6 +1211,31 @@ deep.toJS() <span class="hljs-comment">// { a: 1, b: 2, c: [ 3, 4, 5 ] }</span>
 </section>
   </div>
   <div class="slide hidden" id="slide-33">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-comment">// operations</span>
+<span class="hljs-keyword">const</span> lower = (str) =&gt; str.toLowerCase()
+<span class="hljs-keyword">const</span> tallyUp = (tally, word) =&gt; {
+  tally[word] = (tally[word] || <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">return</span> tally;
+}
+<span class="hljs-comment">// data</span>
+<span class="hljs-keyword">const</span> words = content.split(<span class="hljs-regexp">/[\s.,\/:\n]+/</span>);
+<span class="hljs-keyword">const</span> tally = words
+  .map(lower)
+  .reduce(tallyUp, {})</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-34">
+    <section class="slide-content"><h3 id="fp-untangles-operations-from-data">FP untangles operations from data</h3>
+<p>Operations become:</p>
+<ul>
+<li>Simpler</li>
+<li>Reusable</li>
+<li>Easier to change</li>
+<li>Easier to understand</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-35">
     <section class="slide-content"><p>For next time:</p>
 <ul>
 <li><code>apply</code>, <code>call</code>, <code>bind</code></li>
@@ -1220,22 +1245,16 @@ deep.toJS() <span class="hljs-comment">// { a: 1, b: 2, c: [ 3, 4, 5 ] }</span>
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-34">
+  <div class="slide hidden" id="slide-36">
     <section class="slide-content"><h1 id="thanks-">Thanks!</h1>
 <h2 id="-">💥💥💥</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-35">
-    <section class="slide-content"><p><a href="http://www.infoq.com/presentations/Simple-Made-Easy">http://www.infoq.com/presentations/Simple-Made-Easy</a>
-<a href="https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt">https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt</a>
-<a href="https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a">https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a</a>
-<a href="https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter">https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter</a>
-<a href="http://tobyho.com/2015/11/09/functional-programming-by-example/">http://tobyho.com/2015/11/09/functional-programming-by-example/</a>
-<a href="http://fr.umio.us/why-ramda/">http://fr.umio.us/why-ramda/</a>
-<a href="http://ramdajs.com">http://ramdajs.com</a></p>
+  <div class="slide hidden" id="slide-37">
+    <section class="slide-content"><p><a href="http://www.infoq.com/presentations/Simple-Made-Easy">http://www.infoq.com/presentations/Simple-Made-Easy</a><br><a href="https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt">https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504#.cua401bvt</a><br><a href="https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a">https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4#.e0mu1pf8a</a><br><a href="https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter">https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter</a><br><a href="http://tobyho.com/2015/11/09/functional-programming-by-example/">http://tobyho.com/2015/11/09/functional-programming-by-example/</a><br><a href="http://fr.umio.us/why-ramda/">http://fr.umio.us/why-ramda/</a><br><a href="http://ramdajs.com">http://ramdajs.com</a></p>
 </section>
   </div>
-  <div class="slide hidden author-slide" id="slide-36">
+  <div class="slide hidden author-slide" id="slide-38">
     <section class="slide-content"><div class="author">
   <h1 class="name">Guilherme Rodrigues</h1>
     <h3 class="twitter">
