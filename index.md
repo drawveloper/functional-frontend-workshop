@@ -193,7 +193,30 @@ TL;DR: Always use `const`
 - `const`: "Great, this will stay the same"*
 - `let`: "Uh-oh, need to keep this in mind"
 
-\* doesn't mean immutable. Which brings us to our next topic...
+\* doesn't mean immutable.
+
+--
+
+### Temporal Coupling
+
+> A common problem in API design is temporal coupling, which occurs when there's an implicit relationship between two, or more, members of a class requiring clients to invoke one member before the other. This tightly couples the members in the temporal dimension.
+
+--
+
+Fails:
+
+```java
+var b = new EndpointAddressBuilder();
+var e = b.ToEndpointAddress();
+```
+
+Succeeds:
+
+```java
+var b = new EndpointAddressBuilder();
+b.Uri = new UriBuilder().Uri;
+var e = b.ToEndpointAddress();
+```
 
 --
 
@@ -343,3 +366,4 @@ https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter
 http://tobyho.com/2015/11/09/functional-programming-by-example/  
 http://fr.umio.us/why-ramda/  
 http://ramdajs.com  
+http://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/  
